@@ -206,6 +206,8 @@ var openTd = function (meg,data) {
 	var index_j = 0
 	// 雷周围 数字的 详细数组
 	var figureArr = figureAll(data)
+	// 关闭音乐
+	onOffMusic()
 	var show = setInterval(function(){
 		// log('td',tds[index])
 		tds[index].style.color = 'white';
@@ -470,8 +472,6 @@ var _main = function(data) {
 			starTip()
 			// 设置 剩余炸弹数量 为 空
 			e('.ww-input-bomb').value = ''
-			// 关闭音乐
-			onOffMusic()
 		}else if(map.innerHTML == ''){
 			// log('click')
 			// 设置 游戏状态为 正在游戏中
