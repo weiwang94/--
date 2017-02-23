@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- 扫雷 9*9(初级) 10个雷，16*16(中级) 40个雷，16*30(高级) 99 个雷-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Javascript版扫雷</title>
+    <link rel="stylesheet" href="static/css/sklz.css">
+    <style media="screen">
+        .hide {
+            display:none;
+        }
+        /*设置雷周围数字的颜色*/
+        .figure-1 {
+            color:#673AB7;
+        }
+        .figure-2 {
+            color:green;
+        }
+        .figure-3 {
+            color:red;
+        }
+        .figure-4 {
+            color:blue;
+        }
+        .figure-5 {
+            color:red;
+        }
+        .figure-6 {
+            color:green;
+        }
+        .figure-7 {
+            color:black;
+        }
+        .figure-8 {
+            color:gray;
+        }
+    </style>
+    <style media="screen">
+        /*设置游戏提示的位置*/
+        .tip {
+            left: 103px;
+            top: -20px;
+            text-shadow: 1px 1px  #9e9986;
+            position: relative;;
+        }
+        /*设置笑脸的位置 和阴影*/
+        .ww-div-game {
+            display: inline-block;
+            background: yellow;
+            width:40px;height:35px;
+            top: -29px;
+            left: 164px;
+            position:relative;;
+            /*阴影了效果*/
+            /*设置见网址：
+            http://www.css3generator.in/default.html#box-shadow-generator*/
+            -webkit-box-shadow: 2px 6px 13px #635D0C;
+        }
+        .ww-div-game:hover {
+            transform:scale(1.3, 1.3);
+        }
+        .ww-div-game:hover {
+            transition: 1s;
+        }
+    </style>
+    <style media="screen">
+        .ww-game-play-music {
+            position: relative;
+            left:83px;
+            width: 20px;
+            height: 21px;
+            top: 4px;
+        }
+        .ww-game-play-music:hover {
+            background: white;
+        }
+        .ww-game-play-music:hover {
+            transition: 1s;
+        }
+        .ww-game-voice {
+        	width: 20px;
+            height: 18px;
+            top: 4px;
+            left: 85px;
+        	margin: 0px 3px;
+        	position: relative;
+        }
+        .ww-game-voice:hover {
+        	background: white;
+        }
+        .ww-game-voice:hover {
+        	transition:1s;
+        }
+        .ww-game-voice-control {
+            display: none;
+            -webkit-appearance: none;
+            transform:rotate(-90deg);
+            position: relative;
+            width: 70px;
+            height: 5px;
+            top: -55px;
+            left: 20px;
+            border-right-width: 8px;
+            border-left-width: 8px;
+            border-top-width: 10px;
+            border-bottom-width: 10px;
+            border-style: solid;
+            border-color: #292929;
+            border-radius: 0px;
+            margin: 0px;
+            background:linear-gradient(to right ,#c91818 0%,#c91818 80%,#5b5b5b 80%, #5b5b5b 100%);
+            opacity: 0.9;
+        }
+        .ww-game-voice-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            display: inline-block;
+            position: relative;
+            height: 18px;
+            width: 18px;
+            border: 5px solid #ececef;
+            margin-top: -3px;
+            background: #c70c0c;
+            border-radius: 100%;
+
+        }
+        .ww-game-voice-control::-webkit-slider-runnable-track {
+            height: 11px;
+            border-radius: 10px;
+            /*background:linear-gradient(to right ,#c91818 0%,#c91818 50%,#5b5b5b 50%, #5b5b5b 100%);*/
+        }
+    </style>
+</head>
+<body>
+    <div id="ww-id-game_box">
+        <nav class="ww-game-select">
+            <span class="ww-word" style="color:white">游戏难度：</span>
+            <div class="ww-star" style="display:inline-block">
+                <star></star>
+            </div>
+            <img class="ww-star-add-minus" src="static/img/add.png" alt="加号">
+            <img class="ww-star-add-minus" src="static/img/minus.png" alt="减号">
+            <div class="ww-music-range" style="display:inline-block;">
+                <img class="ww-game-play-music" src="static/img/play.png" alt="播放背景音乐">
+                <img class="ww-game-voice" src="static/img/voice.png" alt="调节声音大小">
+                <input class="ww-game-voice-control" type="range" name="name" min=0 max=10 value=8 step="0.25">
+            </div>
+            <audio class='ww-game-music'>
+                <source src="static/music/Lana Del Rey - Video Games.mp3">
+            </audio>
+        </nav>
+        <div id="ww-id-time">
+            <span class="ww-word">耗时：</span>
+            <input class='ww-input-time' data-state="off" value="0" disabled="disabled" />
+            &nbsp;&nbsp;&nbsp;
+            <span class="ww-word">剩余炸弹：</span>
+            <input class='ww-input-bomb' sytle="" value="0" disabled="disabled"/>
+        </div>
+        <div class="ww-div-game">
+            <img class="ww-img-game" src="static/img/笑脸.png"
+            style="width:40px;height:35px;" alt="笑脸">
+        </div>
+        <div class="tips" style="inline-block">
+            <span class="tip">点击中间的笑脸开始游戏</span>
+        </div>
+        <div id="ww-id-map" data-state="not palying" >
+        </div>
+    </div>
+    <script src='static/js/ku.js'></script>
+    <script src='static/js/markedArry.js'></script>
+    <script src='static/js/backgroundMusic.js'></script>
+    <script src='static/js/saolei.js'></script>
+</body>
+</html>
