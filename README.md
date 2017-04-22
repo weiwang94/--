@@ -16,9 +16,9 @@
 
 ## CSS 样式
 - 文字阴影
-	text-shadow: 1px 1px #FF5722;
+		text-shadow: 1px 1px #FF5722;
 - 游戏背景渐变
-	background: -webkit-linear-gradient(0deg, #54615B 18%, #9E9986 99%);
+		background: -webkit-linear-gradient(0deg, #54615B 18%, #9E9986 99%);
 
 - 动画
 	- 初始化动画
